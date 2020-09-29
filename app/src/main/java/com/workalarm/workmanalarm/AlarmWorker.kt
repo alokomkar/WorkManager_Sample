@@ -27,7 +27,7 @@ class AlarmWorker(private val context: Context, workerParameters: WorkerParamete
             PendingIntent.getBroadcast(
                 context,
                 100,
-                Intent(context, NotificationAlarmReceiver::class.java).apply {
+                Intent(NotificationAlarmReceiver.ALARM_ACTION).apply {
                     putExtra("title", "Triggered at ${Calendar.getInstance().time}")
                 },
                 PendingIntent.FLAG_UPDATE_CURRENT or Intent.FILL_IN_DATA

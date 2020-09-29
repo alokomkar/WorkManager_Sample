@@ -14,43 +14,50 @@ import androidx.core.app.NotificationManagerCompat
 
 class NotificationAlarmReceiver: BroadcastReceiver() {
 
+    companion object {
+        const val ALARM_ACTION = "com.workalarm.workmanalarm.ALARM"
+        private const val ACTION_BOOT_COMPLETED = "android.intent.action.BOOT_COMPLETED"
+    }
+
     override fun onReceive(context: Context?, intent: Intent?) {
         intent?.apply {
-            val title = intent.getStringExtra("title")
-            context ?: return
-            val notification = NotificationCompat.Builder(context, "workAlarm")
-                .setContentTitle(title)
-                .setSmallIcon(R.mipmap.ic_launcher_round)
-                .setContentText("Testing")
-                .setAutoCancel(true)
-                .setContentIntent(
-                    PendingIntent.getActivity(
-                        context, 101, Intent(
-                            context,
-                            MainActivity::class.java
-                        ), PendingIntent.FLAG_UPDATE_CURRENT
+            if (this.action == ALARM_ACTION || this.action == ACTION_BOOT_COMPLETED) {
+                val title = intent.getStringExtra("title")
+                context ?: return
+                val notification = NotificationCompat.Builder(context, "workAlarm")
+                    .setContentTitle(title)
+                    .setSmallIcon(R.mipmap.ic_launcher_round)
+                    .setContentText("Testing")
+                    .setAutoCancel(true)
+                    .setContentIntent(
+                        PendingIntent.getActivity(
+                            context, 101, Intent(
+                                context,
+                                MainActivity::class.java
+                            ), PendingIntent.FLAG_UPDATE_CURRENT
+                        )
                     )
-                )
-                .setChannelId("workAlarm")
+                    .setChannelId("workAlarm")
 
-            val notificationManager = NotificationManagerCompat.from(context)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                val CHANNEL_ID = "workAlarm"
-                val name: CharSequence = "my_channel"
-                val Description = "This is my channel"
-                val importance = NotificationManager.IMPORTANCE_HIGH
-                val mChannel = NotificationChannel(CHANNEL_ID, name, importance)
-                mChannel.description = Description
-                mChannel.enableLights(true)
-                mChannel.lightColor = Color.RED
-                mChannel.enableVibration(true)
-                mChannel.vibrationPattern = longArrayOf(100, 200, 300, 400, 500, 400, 300, 200, 400)
-                mChannel.setShowBadge(false)
-                notificationManager.createNotificationChannel(mChannel)
+                val notificationManager = NotificationManagerCompat.from(context)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    val CHANNEL_ID = "workAlarm"
+                    val name: CharSequence = "my_channel"
+                    val Description = "This is my channel"
+                    val importance = NotificationManager.IMPORTANCE_HIGH
+                    val mChannel = NotificationChannel(CHANNEL_ID, name, importance)
+                    mChannel.description = Description
+                    mChannel.enableLights(true)
+                    mChannel.lightColor = Color.RED
+                    mChannel.enableVibration(true)
+                    mChannel.vibrationPattern = longArrayOf(100, 200, 300, 400, 500, 400, 300, 200, 400)
+                    mChannel.setShowBadge(false)
+                    notificationManager.createNotificationChannel(mChannel)
+                }
+
+                notificationManager
+                    .notify(1011, notification.build())
             }
-
-            notificationManager
-                .notify(1011, notification.build())
         }
     }
 }

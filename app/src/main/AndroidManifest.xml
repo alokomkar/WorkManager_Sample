@@ -16,7 +16,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name=".NotificationAlarmReceiver"/>
+        <receiver android:name=".NotificationAlarmReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="com.workalarm.workmanalarm.ALARM" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

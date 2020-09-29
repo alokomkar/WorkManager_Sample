@@ -28,10 +28,12 @@ class MainActivity : AppCompatActivity() {
             .addTag(AlarmWorker::class.java.simpleName)
             .build()
 
-        val oneTimeRequest = OneTimeWorkRequest.Builder(AlarmWorker::class.java).build()
+        val oneTimeRequest = OneTimeWorkRequest
+            .Builder(AlarmWorker::class.java)
+            .build()
 
         WorkManager.getInstance(this).apply {
-            enqueue(oneTimeRequest)
+            //enqueue(oneTimeRequest)
             enqueue(alarmRequest)
         }
 

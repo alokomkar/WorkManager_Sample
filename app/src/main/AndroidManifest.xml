@@ -19,7 +19,7 @@
         <receiver android:name=".NotificationAlarmReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="com.workalarm.workmanalarm.ALARM" />
+                <action android:name="com.workalarm.workmanalarm.action.ALARM" />
             </intent-filter>
         </receiver>
     </application>

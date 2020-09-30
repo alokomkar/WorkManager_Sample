@@ -146,7 +146,9 @@ class SchedulerService: Service() {
             )
         } else {
             context.startService(
-                Intent(context, SchedulerService::class.java)
+                Intent(context, SchedulerService::class.java).apply {
+                    action = START_FOREGROUND
+                }
             )
         }
     }

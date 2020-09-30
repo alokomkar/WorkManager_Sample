@@ -3,6 +3,7 @@
     package="com.workalarm.workmanalarm">
 
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
 
     <application
         android:allowBackup="true"
@@ -24,6 +25,7 @@
                 <action android:name="com.workalarm.workmanalarm.action.ALARM" />
             </intent-filter>
         </receiver>
+        <service android:name=".SchedulerService"/>
     </application>
 
 </manifest>

@@ -17,9 +17,10 @@ class MainActivity : AppCompatActivity() {
 
         val alarmRequest = PeriodicWorkRequest.Builder(
             AlarmWorker::class.java,
-            20, TimeUnit.MINUTES,
+            15, TimeUnit.MINUTES,
             5,
             TimeUnit.MINUTES)
+            .setInitialDelay(1, TimeUnit.MINUTES)
             .setBackoffCriteria(
                 BackoffPolicy.LINEAR,
                 PeriodicWorkRequest.MIN_BACKOFF_MILLIS,
@@ -28,12 +29,13 @@ class MainActivity : AppCompatActivity() {
             .addTag(AlarmWorker::class.java.simpleName)
             .build()
 
-        val oneTimeRequest = OneTimeWorkRequest
-            .Builder(AlarmWorker::class.java)
+        val oneTimeRequestForService = OneTimeWorkRequest
+            .Builder(ServiceWorker::class.java)
+            .setInitialDelay(2, TimeUnit.MINUTES)
             .build()
 
         WorkManager.getInstance(this).apply {
-            //enqueue(oneTimeRequest)
+            enqueue(oneTimeRequestForService)
             enqueue(alarmRequest)
         }
 

@@ -6,8 +6,10 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import androidx.core.app.AlarmManagerCompat
+import androidx.work.*
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 object ScheduleAlarm {
     fun scheduleAlarm(context: Context) {
@@ -43,5 +45,36 @@ object ScheduleAlarm {
         val alarm = AlarmManager.AlarmClockInfo(System.currentTimeMillis() + 1 * 60 * 1000,
             pendingIntent)
         alarmManager.setAlarmClock(alarm, pendingIntent)
+    }
+
+    fun addTask(context: Context, initialDelayInMinutes: Long) {
+        val constraints = Constraints
+            .Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .build()
+
+        val alarmRequest = PeriodicWorkRequest.Builder(
+            AlarmWorker::class.java,
+            15, TimeUnit.MINUTES,
+            5,
+            TimeUnit.MINUTES)
+            .setInitialDelay(1, TimeUnit.MINUTES)
+            .setBackoffCriteria(
+                BackoffPolicy.LINEAR,
+                PeriodicWorkRequest.MIN_BACKOFF_MILLIS,
+                TimeUnit.MILLISECONDS)
+            .setConstraints(constraints)
+            .addTag(AlarmWorker::class.java.simpleName)
+            .build()
+
+        val oneTimeRequestForService = OneTimeWorkRequest
+            .Builder(ServiceWorker::class.java)
+            .setInitialDelay(initialDelayInMinutes, TimeUnit.MINUTES)
+            .build()
+
+        WorkManager.getInstance(context).apply {
+            enqueue(oneTimeRequestForService)
+            //enqueue(alarmRequest)
+        }
     }
 }

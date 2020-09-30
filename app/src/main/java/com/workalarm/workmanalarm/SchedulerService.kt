@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Build
 import android.os.IBinder
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -34,6 +35,7 @@ class SchedulerService: Service() {
     }
 
     private fun stopService() {
+        Log.d("AlarmWorker", "SchedulerService :: stopService Called")
         // Stop foreground service and remove the notification.
         stopForeground(true);
         // Stop the foreground service.
@@ -41,6 +43,7 @@ class SchedulerService: Service() {
     }
 
     private fun startForeground() {
+        Log.d("AlarmWorker", "SchedulerService :: startForeground Called")
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createNotificationChannel(CHANNEL_ID, "Background Scheduler Service")
         } else {
@@ -95,7 +98,9 @@ class SchedulerService: Service() {
         } catch (e: InterruptedException) {
             e.printStackTrace()
         }
+        Log.d("AlarmWorker", "SchedulerService :: scheduleTask Called")
         ScheduleAlarm.scheduleAlarm(this)
+        ScheduleAlarm.addTask(this, 15)
         stopService()
     }
 

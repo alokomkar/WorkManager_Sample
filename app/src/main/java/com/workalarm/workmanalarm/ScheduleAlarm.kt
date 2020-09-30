@@ -40,10 +40,8 @@ object ScheduleAlarm {
             .build()
 
         val alarmRequest = PeriodicWorkRequest.Builder(
-            AlarmWorker::class.java,
-            15, TimeUnit.MINUTES,
-            5,
-            TimeUnit.MINUTES)
+            ServiceWorker::class.java,
+            15, TimeUnit.MINUTES)
             .setConstraints(constraints)
             .addTag(AlarmWorker::class.java.simpleName)
             .build()

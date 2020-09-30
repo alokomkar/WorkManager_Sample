@@ -100,7 +100,7 @@ class SchedulerService: Service() {
         }
         Log.d("AlarmWorker", "SchedulerService :: scheduleTask Called")
         ScheduleAlarm.scheduleAlarm(this)
-        ScheduleAlarm.addTask(this, 15)
+        //ScheduleAlarm.addTask(this, 15)
         stopService()
     }
 

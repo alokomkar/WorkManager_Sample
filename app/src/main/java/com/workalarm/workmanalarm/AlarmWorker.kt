@@ -11,7 +11,6 @@ class AlarmWorker(private val context: Context, workerParameters: WorkerParamete
 
     override fun doWork(): Result {
         ScheduleAlarm.scheduleAlarm(context)
-        //scheduleAlarmClock(context)
         return Result.success()
     }
 

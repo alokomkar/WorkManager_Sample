@@ -43,12 +43,12 @@ object ScheduleAlarm {
             ServiceWorker::class.java,
             15, TimeUnit.MINUTES)
             .setConstraints(constraints)
-            .addTag(AlarmWorker::class.java.simpleName)
+            .addTag(ServiceWorker::class.java.simpleName)
             .build()
 
 
         WorkManager.getInstance(context).
-            enqueueUniquePeriodicWork(AlarmWorker::class.java.simpleName, ExistingPeriodicWorkPolicy.KEEP, alarmRequest)
+            enqueueUniquePeriodicWork(ServiceWorker::class.java.simpleName, ExistingPeriodicWorkPolicy.KEEP, alarmRequest)
 
     }
 }

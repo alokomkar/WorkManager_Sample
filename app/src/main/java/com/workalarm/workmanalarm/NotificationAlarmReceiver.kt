@@ -34,7 +34,7 @@ class NotificationAlarmReceiver: BroadcastReceiver() {
             wakelock.acquire(3000)
 
             val title = intent.getStringExtra("title")
-            context ?: return
+
             val notification = NotificationCompat.Builder(context, "workAlarm")
                 .setContentTitle(title)
                 .setSmallIcon(R.mipmap.ic_launcher_round)

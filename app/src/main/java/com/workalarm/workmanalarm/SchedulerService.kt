@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.os.AsyncTask
 import android.os.Build
 import android.os.IBinder
 import android.util.Log
@@ -100,7 +101,6 @@ class SchedulerService: Service() {
         }
         Log.d("AlarmWorker", "SchedulerService :: scheduleTask Called")
         ScheduleAlarm.scheduleAlarm(this)
-        //ScheduleAlarm.addTask(this, 15)
         stopService()
     }
 

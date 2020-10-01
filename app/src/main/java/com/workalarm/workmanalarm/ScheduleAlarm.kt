@@ -4,7 +4,6 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import androidx.core.app.AlarmManagerCompat
 import androidx.work.*
 import java.text.SimpleDateFormat
@@ -14,7 +13,7 @@ import java.util.concurrent.TimeUnit
 object ScheduleAlarm {
 
     fun scheduleAlarm(context: Context) {
-        Log.d("AlarmWorker", "scheduleAlarm Called")
+        PersistenceLogger.log(context,"AlarmWorker", "scheduleAlarm Called")
         AlarmManagerCompat.setExactAndAllowWhileIdle(
             context.getSystemService(Context.ALARM_SERVICE) as AlarmManager,
             AlarmManager.RTC_WAKEUP,
@@ -40,15 +39,15 @@ object ScheduleAlarm {
             .build()
 
         val alarmRequest = PeriodicWorkRequest.Builder(
-            ServiceWorker::class.java,
+            AlarmWorker::class.java,
             15, TimeUnit.MINUTES)
             .setConstraints(constraints)
-            .addTag(ServiceWorker::class.java.simpleName)
+            .addTag(AlarmWorker::class.java.simpleName)
             .build()
 
 
         WorkManager.getInstance(context).
-            enqueueUniquePeriodicWork(ServiceWorker::class.java.simpleName, ExistingPeriodicWorkPolicy.KEEP, alarmRequest)
+            enqueueUniquePeriodicWork(AlarmWorker::class.java.simpleName, ExistingPeriodicWorkPolicy.KEEP, alarmRequest)
 
     }
 }

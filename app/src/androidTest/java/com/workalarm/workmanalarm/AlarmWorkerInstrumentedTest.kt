@@ -39,7 +39,7 @@ class AlarmWorkerInstrumentedTest {
         val input = Data.Builder().put("key_1", 1).put("key_2", 2).build()
 
         // Create request
-        val request = PeriodicWorkRequest.Builder(AlarmWorker::class.java, 15, TimeUnit.MINUTES)
+        val request = PeriodicWorkRequest.Builder(ServiceWorker::class.java, 15, TimeUnit.MINUTES)
             .setInputData(input)
             .build()
 

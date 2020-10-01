@@ -69,7 +69,7 @@ class NotificationAlarmReceiver: BroadcastReceiver() {
             notificationManager
                 .notify(1011, notification.build())
 
-            Log.d("AlarmWorker", "AlarmReceiver : onReceive")
+            PersistenceLogger.log(context,"AlarmWorker", "AlarmReceiver : onReceive")
 
         }
 
